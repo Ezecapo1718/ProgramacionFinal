@@ -1,0 +1,67 @@
+create database programacion;
+use programacion;
+
+create table users_backoffice(
+id serial,
+email varchar(40) not null unique,
+name varchar(30) not null,
+password varchar(255) not null,
+created_at timestamp DEFAULT current_timestamp,
+updated_at timestamp DEFAULT current_timestamp,
+deleted_at timestamp null default null,
+primary key(id)
+);
+
+create table users(
+id serial,
+email varchar(40) not null unique,
+name varchar(30) not null,
+password varchar(255) not null,
+url_img varchar(255) not null,
+created_at timestamp DEFAULT current_timestamp,
+updated_at timestamp DEFAULT current_timestamp,
+deleted_at timestamp null default null,
+primary key(id)
+);
+
+create table categorias(
+id serial,
+nombre varchar(20) not null,
+created_at timestamp DEFAULT current_timestamp,
+updated_at timestamp DEFAULT current_timestamp,
+deleted_at timestamp null default null,
+primary key(id)
+);
+
+create table productos(
+id serial,
+categoria bigint unsigned not null,
+nombre varchar(50) not null,
+descripcion varchar(255) not null,
+url_img varchar(255) not null,
+precio int not null,
+created_at timestamp DEFAULT current_timestamp,
+updated_at timestamp DEFAULT current_timestamp,
+deleted_at timestamp null default null,
+primary key(id),
+foreign key (categoria) references categorias(id)
+);
+
+create table compra(
+id serial,
+producto bigint unsigned not null,
+usuario bigint unsigned not null,
+created_at timestamp DEFAULT current_timestamp,
+updated_at timestamp DEFAULT current_timestamp,
+deleted_at timestamp null default null,
+primary key(id),
+foreign key (usuario) references users(id),
+foreign key (producto) references productos(id)
+);
+
+
+INSERT INTO categorias (nombre) VALUES 
+('Almacenamiento'),
+('Celulares'),
+('Frutas'),
+('Herramientas');
